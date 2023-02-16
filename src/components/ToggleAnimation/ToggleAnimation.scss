@@ -1,0 +1,57 @@
+@mixin transition-ease {
+  transition: all 0.4s ease-in-out;
+}
+
+.ToggleAnimation {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  background-color: rgba(grey, 0.5);
+  padding-right: 0.5rem;
+  color: #fff;
+  font-weight: 600;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+
+  .toggleBox {
+    // position: absolute;
+    width: 2.5rem;
+    // width: 4rem;
+    height: 1.25rem;
+    // height: 2rem;
+    margin: 1rem;
+    margin-right: 0.3rem;
+    border-radius: 9999px;
+    background-color: #ccc;
+    padding: 0.2rem;
+    @include transition-ease; // padding-left: 0.rem;
+
+    &.active {
+      background-color: #2196f3;
+
+      .toggleSlider {
+        transform: translateX(150%);
+      }
+    }
+
+    cursor: pointer;
+
+    .toggleSlider {
+      //   position: absolute;
+      width: 40%;
+      height: 100%;
+
+      border-radius: 50%;
+      background-color: #fff;
+      transform: translateX(0);
+      @include transition-ease;
+    }
+  }
+
+  span {
+    font-size: 1.1rem;
+    text-shadow: 3px 3px 3px darken(white, 20%);
+  }
+}

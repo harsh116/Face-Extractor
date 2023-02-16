@@ -1,0 +1,57 @@
+{
+  "name": "facerecognitionbrain",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:8080",
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "axios": "^0.21.1",
+    "clarifai": "^2.9.1",
+    "fractional": "^1.0.0",
+    "jszip": "^3.6.0",
+    "jszip-utils": "^0.1.0",
+    "node-sass": "^4.14.1",
+    "react": "^17.0.2",
+    "react-cookie": "^4.0.3",
+    "react-dom": "^17.0.2",
+    "react-idle-timer": "^4.6.4",
+    "react-loader-spinner": "^4.0.0",
+    "react-particles-js": "^3.4.1",
+    "react-redux": "^7.2.4",
+    "react-scripts": "4.0.3",
+    "react-tilt": "^0.1.4",
+    "redux": "^4.1.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "request-progress": "^3.0.0",
+    "save-as": "^0.1.8",
+    "tachyons": "^4.12.0",
+    "web-vitals": "^1.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,0 +1,140 @@
+@import "config", "helper";
+
+@mixin media-xs {
+  @media screen and (max-width: 400px) {
+    @content;
+  }
+}
+
+@mixin transition-ease {
+  transition: all 0.4s ease-in-out;
+}
+
+.Profile {
+  position: relative;
+  width: 75%;
+  background-color: rgba($primary-color, 0.6);
+  padding: 0.5rem;
+
+  &_name {
+    color: $secondary-color;
+  }
+
+  &_editIcon {
+    color: $secondary-color;
+  }
+
+  &_editIcon:hover {
+    color: $hover-color;
+    @include transition-ease;
+  }
+
+  .entriesStatement {
+    color: $secondary-color;
+  }
+  .entriesNo {
+    color: $secondary-color;
+  }
+
+  .delete_icon_button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: transparent;
+    color: $secondary-color;
+    border: none;
+
+    &:hover {
+      color: $cross-hover-color;
+      @include transition-ease;
+    }
+  }
+}
+
+.profile_photo {
+  width: 4rem;
+}
+
+.cross_editIcon {
+  color: $secondary-color;
+
+  &:hover {
+    color: $cross-hover-color;
+    @include transition-ease;
+  }
+}
+
+//Main
+
+@mixin hr-properties {
+  width: 100%;
+  border: none;
+  border-top: 1px solid $secondary-color;
+}
+
+.Main {
+  display: flex;
+  flex-direction: row;
+
+  &_headings {
+    color: $secondary-color;
+
+    display: flex;
+    flex-direction: column;
+
+    .heading {
+      font-weight: 600;
+    }
+
+    hr {
+      @include hr-properties;
+    }
+  }
+
+  &_data {
+    color: rgba($secondary-color, 0.9);
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+
+    hr {
+      @include hr-properties;
+    }
+  }
+}
+
+.small-icon {
+  font-size: 0.9rem;
+  width: 1rem;
+  float: right;
+}
+
+.editable {
+  background-color: rgba($secondary-color, 0.9);
+  color: $primary-color;
+  width: 50%;
+  //   margin-left: auto;
+  //   margin-left: auto;
+  margin: auto auto;
+}
+
+.editablePassword {
+  margin-right: 0;
+  width: 70%;
+  float: left;
+  text-align: center;
+}
+
+//Responsive
+
+@include media-xs {
+  .Main {
+    // display: flex;
+    flex-direction: column;
+  }
+
+  .col-60,
+  .col-40 {
+    width: 100% !important;
+  }
+}

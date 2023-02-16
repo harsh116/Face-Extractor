@@ -1,0 +1,94 @@
+1: File uploading --done
+2: Handle CORS policy  --done
+3: File name after selecting image and gone after submitting it  --done
+4: handle pending state --done
+5: encrypt token --Not possible
+
+Helpful Links:
+https://stackoverflow.com/questions/12740659/downloading-images-with-node-js
+https://stackoverflow.com/questions/36661795/how-to-upload-an-image-to-google-cloud-storage-from-an-image-url-in-node
+
+Helpful Code:
+/**
+ * TODO(developer): Uncomment the following lines before running the sample.
+ * specify an existing bucket.
+ * specify any url pointing to an file.
+ */
+// const bucketName = 'liist-prod-nodejs-backend';
+// const url = "https://images.unsplash.com/photo-1601191906024-54b4e490abae?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixlib=rb-1.2.1&q=80&w=800";
+
+// 1. load required packages
+const axios = require('axios');
+const crypto = require('crypto');
+const httpAdapter = require('axios/lib/adapters/http');
+
+// 2. setup firebase admin SDK + storage bucket
+const admin = require('firebase-admin');
+const serviceAccount = require('path/to/key.json');
+const app = admin.initializeApp({ 
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: bucketName
+});
+const storage = app.storage();
+const bucket = storage.bucket(bucketName);
+
+// 3. helper function
+function randomToken(size = 20) { // maxsize is 128
+  return crypto.randomBytes(64).toString('hex').substr(0, size)
+}
+
+// 4. async function to actually upload image from link to firebase storage bucket
+async function uploadToStorage(bucket, url) {
+  // define filename, folder and access token
+  const accessToken = randomToken();
+  const bucketName = bucket.name;
+  const fileEnding = url.split('.').pop();
+  const folder = 'defaultFolder';
+  const filename = `myTargetFile`;
+  const fullPath = `${folder}/${filename}.${fileEnding}`;
+  const fullPathUrlEncoded = `${folder}%2F${filename}.${fileEnding}`;
+
+  // axios request to get file stream
+  const axiosResponse = await axios.get(url, { responseType: 'stream', adapter: httpAdapter });
+  if (axiosResponse.status !== 200) {
+    throw new Error(`axios request to ${url} failed.`);
+  } 
+  // create file + write stream (=> tweak options if needed)
+  const file = bucket.file(fullPath);
+  const output = file.createWriteStream({
+    gzip: true,
+    // if public is true, the file can be found here: `https://storage.googleapis.com/${bucketName}/${fullPath}`;
+    public: false, // media token needed, more restricted and secure
+    metadata: {
+      contentType: axiosResponse.headers['content-type'],
+      metadata: {
+        firebaseStorageDownloadTokens: accessToken, // define access token
+      },
+    }
+  });
+  // wrapp stream around a promise
+  // => resolves to public url
+  const stream = axiosResponse.data;
+  const streamPromise = new Promise(function (resolve, reject) {
+    stream.on('data', (chunk) => {
+      output.write(new Buffer.from(chunk));
+    });
+    stream.on('end', () => {
+      output.end();
+      const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${fullPathUrlEncoded}?alt=media&token=${accessToken}`;
+      resolve(publicUrl);
+    });
+    stream.on('error', (err) => {
+      output.end();
+      reject(err);
+    })
+  });
+  return await streamPromise;
+}
+
+// 4. upload to storage
+console.log("uploading file to storage ...");
+(async () => {
+  const publicUrl = await uploadToStorage(bucket, url);
+  console.log(publicUrl);
+})(); 

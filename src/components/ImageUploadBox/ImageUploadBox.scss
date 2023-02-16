@@ -1,0 +1,107 @@
+@mixin transition-ease {
+  transition: all 0.4s ease-in-out;
+}
+
+.ImageUploadBox_Main {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  form {
+    width: fit-content;
+    display: flex;
+    //   justify-content: center;
+    align-items: center;
+    // width: 100%;
+    margin: 0 auto;
+  }
+
+  .imageUploadSubmitBox_btn {
+    display: inline-block;
+    cursor: pointer;
+    background-color: darken(white, 10%);
+
+    border: none;
+    transform: scale(1);
+    @include transition-ease;
+
+    font-size: 1.3rem;
+    padding: 0.5rem;
+
+    &:hover {
+      transform: scale(1.1);
+      background-color: lighten(black, 10%);
+      color: darken(white, 10%);
+    }
+  }
+
+  &::after {
+    content: attr(data-fileName);
+    // content: "fdvfd";
+    position: absolute;
+    top: 110%;
+    // left: 90%;
+    color: black;
+    // background-color: white;
+  }
+}
+
+.ImageUploadBox {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  //   margin: 0 auto;
+  margin-right: 1rem;
+  //   cursor: pointer;
+
+  .btn {
+    border: 2px dashed gray;
+    color: #0e3386;
+    background-color: darken(white, 10%);
+    border-radius: 9999px;
+    padding: 1rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    // cursor: pointer;
+    display: inline-block; // cursor:
+    // transform: scale(1);
+    @include transition-ease;
+
+    &.hovered {
+      //   transform: scale(1.1);
+      background-color: #0e3386;
+      color: darken(white, 10%);
+      border-color: lighten(#0e3386, 10%);
+      @include transition-ease;
+    }
+  }
+
+  .fileUploadInput {
+    font-size: 100px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+    // max-width: 100%;
+    overflow: hidden;
+  }
+
+  input[type="submit"] {
+    // display: inline-block;
+  }
+}
+
+//helper
+.mr-s {
+  margin-right: 0.2rem;
+}
+
+.mr-m {
+  margin-right: 0.5rem;
+}

@@ -1,0 +1,122 @@
+@import "config", "helper";
+
+@mixin transition-ease {
+  transition: all 0.4s ease-in-out;
+}
+
+.DeleteConfirmOverlay {
+  opacity: 0;
+  visibility: hidden;
+  z-index: 100;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  background-color: rgba($primary-color, 0.8);
+
+  transform: scale(1.8);
+  @include transition-ease;
+
+  height: 100%;
+  width: 100%;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+
+    transform: scale(1);
+    @include transition-ease;
+  }
+}
+
+.DeleteConfirmBox {
+  position: relative;
+  background-color: rgba($secondary-color, 0.85);
+  width: 60%;
+  height: 40%;
+  min-height: 200px;
+  top: 50%;
+  left: 50%;
+  margin-left: -30%;
+  margin-top: -10%;
+
+  .options {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    button {
+      background-color: rgba($primary-color, 0.9);
+      border: none;
+      color: $secondary-color;
+      margin: 0.2rem 1rem;
+
+      &.cancelDelete {
+        margin-right: 0.2rem;
+      }
+
+      &.confirmDelete {
+        margin-right: 0.2rem;
+        background-color: rgba($primary-color, 0.7);
+
+        &:hover {
+          cursor: not-allowed;
+        }
+
+        i {
+          &:hover {
+            color: $secondary-color;
+          }
+        }
+      }
+
+      &.confirmDelete.enabled {
+        background-color: rgba($primary-color, 0.9);
+      }
+
+      &.cancelDelete:hover {
+        color: $hover-color;
+        transform: scale(1.1);
+
+        @include transition-ease;
+
+        i {
+          color: $hover-color;
+          @include transition-ease;
+        }
+      }
+
+      &.confirmDelete.enabled:hover {
+        color: $confirm-delete-color;
+        transform: scale(1.2);
+        font-weight: 600;
+        @include transition-ease;
+        cursor: pointer;
+
+        i {
+          color: $confirm-delete-color;
+          @include transition-ease;
+        }
+      }
+    }
+  }
+
+  .securityText {
+    margin-right: 40%;
+    margin-left: 10%;
+    width: 60%;
+    margin-top: 1rem;
+  }
+
+  p {
+    text-align: left;
+    margin-left: 10%;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+  }
+
+  .securityName {
+    font-weight: 700;
+  }
+}

@@ -1,0 +1,54 @@
+@import "config", "helper";
+
+// @import url("https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap");
+
+@mixin transition-ease {
+  transition: all 0.4s ease-in-out;
+}
+
+.PromptMessage {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+  width: 100%;
+
+  display: none;
+  align-items: center;
+
+  &_Message {
+    min-width: 150px;
+    font-family: "Prompt", sans-serif;
+    text-shadow: 1px 1px 3px grey;
+    // font-weight: 6;
+  }
+
+  &_cross {
+    margin-left: auto;
+    @include transition-ease;
+    // background-color: #fff;
+
+    &:hover {
+      background-color: darken(#fff, 2%);
+    }
+  }
+
+  &.active {
+    display: flex;
+  }
+  &::after {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    content: "";
+    background-color: rgba($secondary-color, 0.7);
+    // background-color: red;
+    // opacity: 0.5;
+    // mix-blend-mode: multiply;
+    z-index: -1;
+    margin: 0;
+  }
+}

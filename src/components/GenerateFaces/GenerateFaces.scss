@@ -1,0 +1,29 @@
+$bg-color: purple;
+$button-text-color: white;
+
+.GenerateFaces {
+  margin: 1rem;
+
+  &_button {
+    padding: 0.8rem;
+    display: none;
+
+    color: $button-text-color;
+    background-color: lighten($bg-color, 15%);
+    border: none;
+    border-radius: 9999px;
+
+    transition: all 0.4s ease-in-out;
+
+    &.active {
+      display: inline-block;
+      background-color: $bg-color;
+      cursor: pointer;
+    }
+
+    &.active:hover {
+      transform: scale(1.1);
+      background-color: lighten($bg-color, 5%);
+    }
+  }
+}
